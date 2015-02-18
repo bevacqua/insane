@@ -1,7 +1,7 @@
 {
   "name": "insane",
   "version": "1.0.0",
-  "description": "Lean and configurable HTML sanitizer",
+  "description": "Lean and configurable whitelist-oriented HTML sanitizer",
   "repository": {
     "type": "git",
     "url": "https://github.com/bevacqua/insane.git"

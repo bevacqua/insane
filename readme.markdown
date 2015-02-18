@@ -2,7 +2,7 @@
 
 > Lean and configurable whitelist-oriented HTML sanitizer
 
-Works well in browsers, as its footprint size is very small **_(around **~2kb** gzipped)_**.
+Works well in browsers, as its footprint size is very small **_(around **~2kb** gzipped)_**. API inspired by [`sanitize-html`][1].
 
 <sub>**You would be insane not to use this!**</sub>
 
@@ -134,3 +134,5 @@ insane('<span aria-label="a foo">foo</span><span>bar</span>', {
 # License
 
 MIT
+
+[1]: https://github.com/punkave/sanitize-html
