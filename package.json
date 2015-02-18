@@ -1,0 +1,29 @@
+{
+  "name": "insane",
+  "version": "1.0.0",
+  "description": "Lean and configurable HTML sanitizer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bevacqua/insane.git"
+  },
+  "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com> (http://bevacqua.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bevacqua/insane/issues"
+  },
+  "homepage": "https://github.com/bevacqua/insane",
+  "main": "insane.js",
+  "browser": {
+    "he": "./she.js"
+  },
+  "scripts": {
+    "test": "tape test/**/*.js"
+  },
+  "dependencies": {
+    "he": "^0.5.0"
+  },
+  "devDependencies": {
+    "sinon": "^1.12.2",
+    "tape": "^3.5.0"
+  }
+}
