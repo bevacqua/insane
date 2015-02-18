@@ -112,6 +112,8 @@ insane('<span aria-label="a foo">foo</span><span>bar</span>', {
 
 ## Defaults
 
+The default configuration is used if you don't provide any. This object is available at `insane.defaults`. You are free to manipulate the defaults themselves.
+
 ```json
 {
   "allowedAttributes": {
