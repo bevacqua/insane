@@ -38,7 +38,7 @@ function parser (html, handler) {
   }
 
   function parseTag () {
-    if (html.indexOf('<!--') === 0) { // comments
+    if (html.substr(0, 4) === '<!--') { // comments
       parseComment();
     } else if (rtagend.test(html)) {
       parseEdge(rend, parseEndTag);

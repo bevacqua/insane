@@ -4,6 +4,7 @@
 - Added `strict` parameter to revert to `1.0.0` behavior
 - Removed `iframe` from default `allowedTags` collection
 - Allow relative URLs such as `images/deep.png` in attributes
+- Significantly sped up tag-intensive HTML parsing
 
 # 1.0.0 IPO
 

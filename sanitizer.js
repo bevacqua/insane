@@ -7,7 +7,6 @@ var attributes = require('./attributes');
 function sanitizer (buffer, options) {
   var last;
   var context;
-  var out = buffer.push.bind(buffer);
   var o = options || {};
 
   reset();
@@ -17,6 +16,10 @@ function sanitizer (buffer, options) {
     end: end,
     chars: chars
   };
+
+  function out (value) {
+    buffer.push(value);
+  }
 
   function start (tag, attrs, unary) {
     var low = lowercase(tag);

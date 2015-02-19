@@ -5,6 +5,8 @@ var test = require('tape');
 var sinon = require('sinon');
 var insane = require('..');
 var dirty = read('dirty');
+var async = read('async');
+var cheerio = read('cheerio');
 var dirtyExpected = read('dirty-expected');
 
 function read (file) {
@@ -13,5 +15,23 @@ function read (file) {
 
 test('succeeds because of sensible defaults', function (t) {
   t.equal(insane(dirty), dirtyExpected);
+  t.end();
+});
+
+test('shouldn\'t take that long with (highlighted) async readme', function (t) {
+  var start = Date.now();
+  insane(async);
+  var diff = Date.now() - start;
+  console.log('diff:', diff);
+  t.ok(diff < 200);
+  t.end();
+});
+
+test('shouldn\'t take that long with (highlighted) cheerio readme', function (t) {
+  var start = Date.now();
+  insane(cheerio);
+  var diff = Date.now() - start;
+  console.log('diff:', diff);
+  t.ok(diff < 200);
   t.end();
 });
