@@ -23,10 +23,11 @@ Contrary to similar sanitizers, `insane` drops the whole tree of descendants for
 
 # API
 
-# `insane(html, options?)`
+# `insane(html, options?, strict?)`
 
 - `html` can be an arbitrary HTML string
 - `options` are detailed below
+- `strict` means that `options` won't be based off of [insane.defaults](#defaults) if set to `true`
 
 The parser takes into account that some elements can be self-closing. For safety reasons the sanitizer will only accept a valid URL for `background`, `base`, `cite`, `href`, `longdesc`, `src`, and `usemap` elements. **"Valid URL"** means that it begins with either `#`, `/`, or any of `options.allowedSchemes` _(followed by `:`)_.
 
@@ -125,8 +126,8 @@ The default configuration is used if you don't provide any. This object is avail
   "allowedSchemes": ["http", "https", "mailto"],
   "allowedTags": [
     "a", "article", "b", "blockquote", "br", "caption", "code", "del", "details", "div", "em",
-    "h1", "h2", "h3", "h4", "h5", "h6", "hr", "i", "iframe", "img", "ins", "kbd", "li", "main",
-    "ol", "p", "pre", "section", "span", "strike", "strong", "sub", "summary", "sup", "table",
+    "h1", "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "ins", "kbd", "li", "main", "ol",
+    "p", "pre", "section", "span", "strike", "strong", "sub", "summary", "sup", "table",
     "tbody", "td", "th", "thead", "tr", "ul"
   ],
   "filter": null

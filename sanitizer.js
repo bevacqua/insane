@@ -78,9 +78,20 @@ function sanitizer (buffer, options) {
   }
 
   function testUrl (text) {
-    var valid = ['#', '/'];
     var start = text[0];
-    if (valid.indexOf(start) !== -1) {
+    if (start === '#' || start === '/') {
+      return true;
+    }
+    var colon = text.indexOf(':');
+    if (colon === -1) {
+      return true;
+    }
+    var questionmark = text.indexOf('?');
+    if (questionmark !== -1 && colon > questionmark) {
+      return true;
+    }
+    var hash = text.indexOf('#');
+    if (hash !== -1 && colon > hash) {
       return true;
     }
     return o.allowedSchemes.some(matches);

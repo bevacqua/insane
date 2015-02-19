@@ -4,10 +4,12 @@ var he = require('he');
 var parser = require('./parser');
 var sanitizer = require('./sanitizer');
 var defaults = require('./defaults');
+var assign = require('./assign');
 
-function insane (html, options) {
+function insane (html, options, strict) {
   var buffer = [];
-  var handler = sanitizer(buffer, options || defaults);
+  var configuration = strict === true ? options : assign({}, defaults, options);
+  var handler = sanitizer(buffer, configuration);
 
   parser(html, handler);
 

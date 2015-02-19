@@ -15,80 +15,110 @@ test('succeeds because of whitelist approach', function (t) {
 });
 
 test('only returns tags in the whitelist', function (t) {
-  t.equal(insane('<p><span>foo</span>bar</p>', { allowedTags: ['p'] }), '<p>bar</p>');
-  t.equal(insane('<p>bar<span>foo</span></p>', { allowedTags: ['p'] }), '<p>bar</p>');
+  t.equal(insane('<p><span>foo</span>bar</p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
+  t.equal(insane('<p>bar<span>foo</span></p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
   t.end();
 });
 
 test('only returns tags in the whitelist even if deeper content is allowed', function (t) {
-  t.equal(insane('<div><p><span>foo</span></p>bar</div>', { allowedTags: ['span', 'div'] }), '<div>bar</div>');
+  t.equal(insane('<div><p><span>foo</span></p>bar</div>', { allowedTags: ['span', 'div'] }, true), '<div>bar</div>');
   t.end();
 });
 
 test('only returns tags in the whitelist even if deeper content is allowed', function (t) {
-  t.equal(insane('<p><span><div>foo</div></span>bar</p>', { allowedTags: ['p', 'div'] }), '<p>bar</p>');
+  t.equal(insane('<p><span><div>foo</div></span>bar</p>', { allowedTags: ['p', 'div'] }, true), '<p>bar</p>');
   t.end();
 });
 
 test('only returns tags in the whitelist even if deeper content is mixed', function (t) {
-  t.equal(insane('<p><span><span><p>foo</p></span></span>bar</p>', { allowedTags: ['p'] }), '<p>bar</p>');
-  t.equal(insane('<p><div><span><div>foo</div></span></div>bar</p>', { allowedTags: ['p'] }), '<p>bar</p>');
+  t.equal(insane('<p><span><span><p>foo</p></span></span>bar</p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
+  t.equal(insane('<p><div><span><div>foo</div></span></div>bar</p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
   t.end();
 });
 
 test('only returns tags in the whitelist even if repeated', function (t) {
-  t.equal(insane('<p><p>foo</p>bar</p>', { allowedTags: ['p'] }), '<p><p>foo</p>bar</p>');
-  t.equal(insane('<p><p><span>foo</span></p>bar</p>', { allowedTags: ['p'] }), '<p><p></p>bar</p>');
-  t.equal(insane('<p><span><p>foo</p></span>bar</p>', { allowedTags: ['p'] }), '<p>bar</p>');
+  t.equal(insane('<p><p>foo</p>bar</p>', { allowedTags: ['p'] }, true), '<p><p>foo</p>bar</p>');
+  t.equal(insane('<p><p><span>foo</span></p>bar</p>', { allowedTags: ['p'] }, true), '<p><p></p>bar</p>');
+  t.equal(insane('<p><span><p>foo</p></span>bar</p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
   t.end();
 });
 
 test('only returns tags in the whitelist even if disallowed tag is nested', function (t) {
-  t.equal(insane('<p><span><p><span>foo</span></p></span>bar</p>', { allowedTags: ['p'] }), '<p>bar</p>');
+  t.equal(insane('<p><span><p><span>foo</span></p></span>bar</p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
   t.end();
 });
 
 test('drops every attribute', function (t) {
-  t.equal(insane('<div a="a" b="b" class="foo">foo</div>', { allowedTags: ['div'] }), '<div>foo</div>');
+  t.equal(insane('<div a="a" b="b" class="foo">foo</div>', { allowedTags: ['div'] }, true), '<div>foo</div>');
   t.end();
 });
 
 test('drops every attribute except the allowed ones', function (t) {
-  t.equal(insane('<div a="a" b="b" class="foo">foo</div>', { allowedTags: ['div'], allowedAttributes: { div: ['b'] } }), '<div b="b">foo</div>');
+  t.equal(insane('<div a="a" b="b" class="foo">foo</div>', {
+    allowedTags: ['div'],
+    allowedAttributes: { div: ['b'] } },
+    true
+  ), '<div b="b">foo</div>');
   t.end();
 });
 
 test('drops every attribute except the allowed ones, even in case of class names', function (t) {
-  t.equal(insane('<div a="a" b="b" class="foo">foo</div>', { allowedTags: ['div'], allowedAttributes: { div: ['class'] } }), '<div class="foo">foo</div>');
+  t.equal(insane('<div a="a" b="b" class="foo">foo</div>', {
+    allowedTags: ['div'],
+    allowedAttributes: { div: ['class'] } },
+    true
+  ), '<div class="foo">foo</div>');
   t.end();
 });
 
 test('drops every class name if not whitelisted', function (t) {
-  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', { allowedTags: ['div'], allowedClasses: { div: ['bar'] } }), '<div class="bar">foo</div>');
+  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', {
+    allowedTags: ['div'],
+    allowedClasses: { div: ['bar'] } },
+    true
+  ), '<div class="bar">foo</div>');
   t.end();
 });
 
 test('ignores whitelist and just allows everything if "class" is an allowed attribute', function (t) {
-  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', { allowedTags: ['div'], allowedAttributes: { div: ['class'] }, allowedClasses: { div: ['bar'] } }), '<div class="foo bar">foo</div>');
+  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', {
+    allowedTags: ['div'],
+    allowedAttributes: { div: ['class'] },
+    allowedClasses: { div: ['bar'] } },
+    true
+  ), '<div class="foo bar">foo</div>');
   t.end();
 });
 
 test('filter turns everything into ignores', function (t) {
   var filter = sinon.spy();
-  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', { filter: filter, allowedTags: ['div'] }), '');
+  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', {
+    filter: filter,
+    allowedTags: ['div'] },
+    true
+  ), '');
   t.end();
 });
 
 test('calls filter', function (t) {
   var filter = sinon.stub().returns(true);
-  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', { filter: filter, allowedTags: ['div'] }), '<div>foo</div>');
+  t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', {
+    filter: filter,
+    allowedTags: ['div'] },
+    true
+  ), '<div>foo</div>');
   t.equal(filter.callCount, 1);
   t.deepEqual(filter.firstCall.args, [{ attrs: { a: 'a', b: 'b', class: 'foo bar' }, tag: 'div' }]);
   t.end();
 });
 
 test('uses filter wisely', function (t) {
-  t.equal(insane('<span aria-label="a foo">foo</span><span>bar</span>', { allowedTags: ['span'], allowedAttributes: { span: ['aria-label'] }, filter: filter }), '<span aria-label="a foo">foo</span>');
+  t.equal(insane('<span aria-label="a foo">foo</span><span>bar</span>', {
+    allowedTags: ['span'],
+    allowedAttributes: { span: ['aria-label'] },
+    filter: filter },
+    true
+  ), '<span aria-label="a foo">foo</span>');
   t.end();
 
   function filter (token) {
