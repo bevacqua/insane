@@ -93,7 +93,7 @@ Takes a `function(token)` that allows you to do additional validation beyond exa
 - `tag` is the lowercase tag name of the element
 - `attrs` is an object containing _every_ attribute in the element, **including** those that may not be in the whitelist
 
-If you return a falsy value the element and all of its descendants will not be included in the output.
+If you return a falsy value the element and all of its descendants will not be included in the output. Note that you are allowed to change the `attrs`, and even add new ones, transforming the output.
 
 ###### Example
 
