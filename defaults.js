@@ -2,9 +2,9 @@
 
 var defaults = {
   allowedAttributes: {
-    a: ['href', 'name', 'target'],
+    a: ['href', 'name', 'target', 'title', 'aria-label'],
     iframe: ['allowfullscreen', 'frameborder', 'src'],
-    img: ['src']
+    img: ['src', 'alt', 'title', 'aria-label']
   },
   allowedClasses: {},
   allowedSchemes: ['http', 'https', 'mailto'],
