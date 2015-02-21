@@ -20,7 +20,7 @@
     "test": "tape test/**/*.js"
   },
   "dependencies": {
-    "assignment": "^1.0.0",
+    "assignment": "^2.0.0",
     "he": "^0.5.0"
   },
   "devDependencies": {
