@@ -1,3 +1,7 @@
+# 2.1.1 Assignments
+
+- Moved `assign()` into `assignment` npm module
+
 # 2.1.0 Label Maker
 
 - Added `title`, and `aria-label` to the `a` attribute whitelist

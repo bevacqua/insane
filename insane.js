@@ -1,10 +1,10 @@
 'use strict';
 
 var he = require('he');
+var assign = require('assignment');
 var parser = require('./parser');
 var sanitizer = require('./sanitizer');
 var defaults = require('./defaults');
-var assign = require('./assign');
 
 function insane (html, options, strict) {
   var buffer = [];
