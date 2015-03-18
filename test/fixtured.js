@@ -35,3 +35,17 @@ test('shouldn\'t take that long with (highlighted) cheerio readme', function (t)
   t.ok(diff < 200);
   t.end();
 });
+
+test('should match deep tag', function (t) {
+  t.equal(insane(read('deep'), {
+    allowedClasses: {
+      section: ['md-attachments'],
+      a: ['md-attachment', 'fa', 'fa-download'],
+      span: ['md-attachment-annotation']
+    },
+    allowedAttributes: {
+      a: ['href', 'target', 'title', 'download']
+    }
+  }), read('deep-expected'));
+  t.end();
+});

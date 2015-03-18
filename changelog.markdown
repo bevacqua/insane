@@ -1,3 +1,7 @@
+# 2.2.0 Big Bang
+
+- Attributes without a value, such as `<button disabled></button>` are translated into their better compatible counterparts `<button disabled="disabled"></button>`
+
 # 2.1.1 Assignments
 
 - Moved `assign()` into `assignment` npm module

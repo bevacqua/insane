@@ -14,6 +14,11 @@ test('succeeds because of whitelist approach', function (t) {
   t.end();
 });
 
+test('doesn\'t fail with basic parsing', function (t) {
+  t.equal(insane('<div>\n  <span>\n    <span>/foo</span>\n  </span>\n</div>'), '<div>\n  <span>\n    <span>/foo</span>\n  </span>\n</div>');
+  t.end();
+});
+
 test('only returns tags in the whitelist', function (t) {
   t.equal(insane('<p><span>foo</span>bar</p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
   t.equal(insane('<p>bar<span>foo</span></p>', { allowedTags: ['p'] }, true), '<p>bar</p>');
