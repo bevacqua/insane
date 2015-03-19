@@ -1,3 +1,7 @@
+# 2.3.0 Implosion
+
+- Attributes without a value are preserved as-is
+
 # 2.2.0 Big Bang
 
 - Attributes without a value, such as `<button disabled></button>` are translated into their better compatible counterparts `<button disabled="disabled"></button>`

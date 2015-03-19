@@ -54,9 +54,11 @@ function sanitizer (buffer, options) {
       if (valid) {
         out(' ');
         out(key);
-        out('="');
-        out(he.encode(value));
-        out('"');
+        if (typeof value === 'string') {
+          out('="');
+          out(he.encode(value));
+          out('"');
+        }
       }
       function isValidClass (className) {
         return classesOk && classesOk.indexOf(className) !== -1;

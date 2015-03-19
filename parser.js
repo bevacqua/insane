@@ -102,7 +102,7 @@ function parser (html, handler) {
 
     function attrReplacer (match, name, doubleQuotedValue, singleQuotedValue, unquotedValue) {
       if (doubleQuotedValue === void 0 && singleQuotedValue === void 0 && unquotedValue === void 0) {
-        attrs[name] = he.decode(name); // attribute is like <button disabled></button>
+        attrs[name] = void 0; // attribute is like <button disabled></button>
       } else {
         attrs[name] = he.decode(doubleQuotedValue || singleQuotedValue || unquotedValue || '');
       }
