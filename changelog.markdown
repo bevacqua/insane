@@ -1,3 +1,7 @@
+# 2.4.0 Thoughtseize
+
+- Instead of throwing an exception, discards unclosed HTML tags at the end of the input stream
+
 # 2.3.0 Implosion
 
 - Attributes without a value are preserved as-is

@@ -31,10 +31,13 @@ function parser (html, handler) {
   function parsePart () {
     chars = true;
     parseTag();
-    if (html === last) {
-      throw new Error('insane parser error: ' + html);
-    }
+
+    var same = html === last;
     last = html;
+
+    if (same) { // discard, because it's invalid
+      html = '';
+    }
   }
 
   function parseTag () {
