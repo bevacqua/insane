@@ -145,3 +145,9 @@ test('fails to read urls that don\'t make sense', function (t) {
   t.equal(insane('<a href="magnet:?xt=urn:btih:E6462F43A9B7329961FADA1">bar</a>'), '<a>bar</a>');
   t.end();
 });
+
+test('doesn\'t care about quotes', function (t) {
+  t.equal(insane('<span>"bar"</span>'), '<span>"bar"</span>');
+  t.equal(insane('"bar"'), '"bar"');
+  t.end();
+});

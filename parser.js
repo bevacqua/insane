@@ -85,7 +85,7 @@ function parser (html, handler) {
       html = '';
     }
     if (handler.chars) {
-      handler.chars(he.decode(text));
+      handler.chars(text);
     }
   }
 
