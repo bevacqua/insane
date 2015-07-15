@@ -148,6 +148,8 @@ test('fails to read urls that don\'t make sense', function (t) {
 
 test('doesn\'t care about quotes', function (t) {
   t.equal(insane('<span>"bar"</span>'), '<span>"bar"</span>');
+  t.equal(insane('<span>"bar?"</span>'), '<span>"bar?"</span>');
   t.equal(insane('"bar"'), '"bar"');
+  t.equal(insane('"bar?"'), '"bar?"');
   t.end();
 });
