@@ -1,3 +1,7 @@
+# 2.4.2 Mark
+
+- Added `mark` tag name to defaults
+
 # 2.4.1 Encore
 
 - Fix encoding issues in text nodes, which would become decoded and re-encoded for no reason
