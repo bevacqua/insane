@@ -1,3 +1,7 @@
+# 2.4.3 Abbreviate!
+
+- Added `abbr` tag name to defaults
+
 # 2.4.2 Mark
 
 - Added `mark` tag name to defaults
