@@ -14,7 +14,15 @@ test('succeeds because of whitelist approach', function (t) {
   t.end();
 });
 
-test('doesn\'t fail with basic parsing', function (t) {
+test('deals with iframes and scripts by default', function (t) {
+  t.equal(insane('<script>"foo"</script>'), '');
+  t.equal(insane('<script src="http://google.com">"foo"</script>'), '');
+  t.equal(insane('<iframe>"foo"</iframe>'), '');
+  t.equal(insane('<iframe src="http://google.com">asd</iframe>'), '');
+  t.end();
+});
+
+test('doesn\'t fail at basic parsing', function (t) {
   t.equal(insane('<div>\n  <span>\n    <span>/foo</span>\n  </span>\n</div>'), '<div>\n  <span>\n    <span>/foo</span>\n  </span>\n</div>');
   t.end();
 });
