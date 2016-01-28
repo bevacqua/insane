@@ -101,7 +101,7 @@ If you return a falsy value the element and all of its descendants will not be i
 
 ```js
 function filter (token) {
-  return token.tag !== 'span' || attrs['aria-label'];
+  return token.tag !== 'span' || token.attrs['aria-label'];
 }
 insane('<span aria-label="a foo">foo</span><span>bar</span>', {
   allowedTags: ['span'],
