@@ -111,6 +111,10 @@ insane('<span aria-label="a foo">foo</span><span>bar</span>', {
 // <- '<span aria-label="a foo">foo</span>'
 ```
 
+#### `transformText`
+
+Takes a `function(text)` that allows you to modify text content in HTML elements. Runs for every piece of text content. The returned value is used instead of the original text contents.
+
 ## Defaults
 
 The default configuration is used if you don't provide any. This object is available at `insane.defaults`. You are free to manipulate the defaults themselves.
@@ -130,7 +134,8 @@ The default configuration is used if you don't provide any. This object is avail
     "p", "pre", "section", "span", "strike", "strong", "sub", "summary", "sup", "table",
     "tbody", "td", "th", "thead", "tr", "ul"
   ],
-  "filter": null
+  "filter": null,
+  "transformText": null
 }
 ```
 

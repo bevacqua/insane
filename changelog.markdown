@@ -1,3 +1,7 @@
+# 2.5.0 Transformers
+
+- Added `transformText` option allowing to mangle or fork content of text nodes
+
 # 2.4.3 Abbreviate!
 
 - Added `abbr` tag name to defaults

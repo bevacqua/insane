@@ -108,7 +108,7 @@ function sanitizer (buffer, options) {
 
   function chars (text) {
     if (context.ignoring === false) {
-      out(text);
+      out(o.transformText ? o.transformText(text) : text);
     }
   }
 
