@@ -155,9 +155,22 @@ test('fails to read urls that don\'t make sense', function (t) {
 });
 
 test('doesn\'t care about quotes', function (t) {
-  t.equal(insane('<span>"bar"</span>'), '<span>"bar"</span>');
+  t.equal(insane('<sPan>"bar"</sPan>'), '<span>"bar"</span>');
   t.equal(insane('<span>"bar?"</span>'), '<span>"bar?"</span>');
   t.equal(insane('"bar"'), '"bar"');
   t.equal(insane('"bar?"'), '"bar?"');
+  t.end();
+});
+
+test('can ignore html in code', function (t) {
+  t.equal(
+    insane('<cOde>\nvar a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n\nvar b = 2;</cOde>', {
+      filter: function (tag, attrs) {
+        console.log(tag);
+        return true;
+      }
+    }),
+    '<code>\nvar a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n\nvar b = 2;</code>'
+  );
   t.end();
 });

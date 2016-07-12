@@ -83,8 +83,8 @@ function sanitizer (buffer, options) {
   }
 
   function testUrl (text) {
-    var start = text[0];
-    if (start === '#' || start === '/') {
+    var first = text[0];
+    if (first === '#' || first === '/') {
       return true;
     }
     var colon = text.indexOf(':');
