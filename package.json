@@ -1,6 +1,6 @@
 {
   "name": "insane",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Lean and configurable whitelist-oriented HTML sanitizer",
   "repository": {
     "type": "git",
