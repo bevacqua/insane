@@ -47,7 +47,7 @@ function parser (html, handler) {
       var match = rcodeend.exec(html);
       var i = match && match.index || 0;
       if (handler.chars) {
-        handler.chars(html.slice(0, i));
+        handler.chars(he.encode(html.slice(0, i)));
       }
       html = html.slice(i);
       return true;

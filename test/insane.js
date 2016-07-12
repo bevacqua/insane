@@ -165,19 +165,19 @@ test('doesn\'t care about quotes', function (t) {
 test('can ignore html in code', function (t) {
   t.equal(
     insane('<cOde>\nvar a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n\nvar b = 2;</cOde>'),
-    '<code>\nvar a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n\nvar b = 2;</code>'
+    '<code>\nvar a = 1;\n\n&#x3C;!DOCTYPE html&#x3E;\n&#x3C;html&#x3E;\n&#x3C;span&#x3E;foo&#x3C;/span&#x3E;\n&#x3C;/html&#x3E;\n\nvar b = 2;</code>'
   );
   t.equal(
     insane('<pre><code>var a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n</code></pre>c foo <span>b</span>'),
-    '<pre><code>var a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n</code></pre>c foo <span>b</span>'
+    '<pre><code>var a = 1;\n\n&#x3C;!DOCTYPE html&#x3E;\n&#x3C;html&#x3E;\n&#x3C;span&#x3E;foo&#x3C;/span&#x3E;\n&#x3C;/html&#x3E;\n</code></pre>c foo <span>b</span>'
   );
   t.equal(
     insane('<pre><code>var a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n</code></pre>c foo <span>b</span> <script>bar<span>foo</span></script>', { allowedTags: ['pre', 'code', 'span'] }),
-    '<pre><code>var a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n</code></pre>c foo <span>b</span> '
+    '<pre><code>var a = 1;\n\n&#x3C;!DOCTYPE html&#x3E;\n&#x3C;html&#x3E;\n&#x3C;span&#x3E;foo&#x3C;/span&#x3E;\n&#x3C;/html&#x3E;\n</code></pre>c foo <span>b</span> '
   );
   t.equal(
     insane('<pre><code>var a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n</code></pre>c foo <span>b</span> <script>bar<span>foo</span></script>', { allowedTags: ['pre', 'code', 'span', 'script'] }),
-    '<pre><code>var a = 1;\n\n<!DOCTYPE html>\n<html>\n<span>foo</span>\n</html>\n</code></pre>c foo <span>b</span> <script>bar<span>foo</span></script>'
+    '<pre><code>var a = 1;\n\n&#x3C;!DOCTYPE html&#x3E;\n&#x3C;html&#x3E;\n&#x3C;span&#x3E;foo&#x3C;/span&#x3E;\n&#x3C;/html&#x3E;\n</code></pre>c foo <span>b</span> <script>bar<span>foo</span></script>'
   );
   t.end();
 });
