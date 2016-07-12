@@ -1,3 +1,7 @@
+# 2.5.1 Code Wrangler
+
+- Fixed a bug where `<code>` tags couldn't contain much HTML at all
+
 # 2.5.0 Transformers
 
 - Added `transformText` option allowing to mangle or fork content of text nodes
