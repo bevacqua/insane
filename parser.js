@@ -9,7 +9,7 @@ var rend = /^<\s*\/\s*([\w:-]+)[^>]*>/;
 var rattrs = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g;
 var rtag = /^</;
 var rtagend = /^<\s*\//;
-var rcodeend = /<\s*\/\s*code\s*>$/i;
+var rcodeend = /<\s*\/\s*code\s*>/i;
 
 function createStack () {
   var stack = [];
@@ -36,11 +36,21 @@ function parser (html, handler) {
     var same = html === last;
     last = html;
 
-    if (same) {
-      if (stack.lastItem() === 'code' && handler.chars) {
-        handler.chars(html.replace(rcodeend, ''));
+    if (same && !ignoreInvalidContentInCode()) { // discard, because it's invalid
+      html = '';
+    }
+
+    function ignoreInvalidContentInCode () {
+      if (stack.lastItem() !== 'code') {
+        return false;
       }
-      html = ''; // discard, because it's invalid
+      var match = rcodeend.exec(html);
+      var i = match && match.index || 0;
+      if (handler.chars) {
+        handler.chars(html.slice(0, i));
+      }
+      html = html.slice(i);
+      return true;
     }
   }
 
