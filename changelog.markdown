@@ -1,3 +1,7 @@
+# 2.5.1 Self-Filter
+
+- Filter works properly with self-closing tags
+
 # 2.5.0 Transformers
 
 - Added `transformText` option allowing to mangle or fork content of text nodes

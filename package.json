@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/bevacqua/insane.git"
   },
-  "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com> (http://bevacqua.io/)",
+  "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com> (https://ponyfoo.com/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bevacqua/insane/issues"
@@ -20,11 +20,11 @@
     "test": "tape test/**/*.js"
   },
   "dependencies": {
-    "assignment": "^2.0.0",
-    "he": "^0.5.0"
+    "assignment": "2.0.0",
+    "he": "0.5.0"
   },
   "devDependencies": {
-    "sinon": "^1.12.2",
-    "tape": "^3.5.0"
+    "sinon": "1.17.5",
+    "tape": "3.5.0"
   }
 }

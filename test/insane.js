@@ -113,6 +113,16 @@ test('filter turns everything into ignores', function (t) {
   t.end();
 });
 
+test('filter works as expected for self-closing tags', function (t) {
+  var filter = sinon.spy();
+  t.equal(insane('foo <img a="a"/> bar', {
+    filter: filter,
+    allowedTags: ['div'] },
+    true
+  ), 'foo  bar');
+  t.end();
+});
+
 test('calls filter', function (t) {
   var filter = sinon.stub().returns(true);
   t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', {

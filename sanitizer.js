@@ -3,6 +3,7 @@
 var he = require('he');
 var lowercase = require('./lowercase');
 var attributes = require('./attributes');
+var elements = require('./elements');
 
 function sanitizer (buffer, options) {
   var last;
@@ -113,6 +114,9 @@ function sanitizer (buffer, options) {
   }
 
   function ignore (tag) {
+    if (elements.voids[tag]) {
+      return;
+    }
     if (context.ignoring === false) {
       context = { ignoring: tag, depth: 1 };
     } else if (context.ignoring === tag) {
