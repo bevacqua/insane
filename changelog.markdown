@@ -1,3 +1,6 @@
+
+- Add 'u' tag to accepted whitelist.
+
 # 2.5.1 Self-Filter
 
 - Filter works properly with self-closing tags
