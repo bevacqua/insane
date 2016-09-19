@@ -33,7 +33,7 @@ The parser takes into account that some elements can be self-closing. For safety
 
 ## `options`
 
-[Sensible defaults](#defaults) are provided, but you can change these options.
+[Sensible defaults](#defaults) are provided. You can override specific options as needed.
 
 #### `allowedSchemes`
 
