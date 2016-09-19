@@ -132,7 +132,7 @@ The default configuration is used if you don't provide any. This object is avail
     "a", "article", "b", "blockquote", "br", "caption", "code", "del", "details", "div", "em",
     "h1", "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "ins", "kbd", "li", "main", "ol",
     "p", "pre", "section", "span", "strike", "strong", "sub", "summary", "sup", "table",
-    "tbody", "td", "th", "thead", "tr", "ul"
+    "tbody", "td", "th", "thead", "tr", "u", "ul"
   ],
   "filter": null,
   "transformText": null
