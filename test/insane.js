@@ -84,6 +84,15 @@ test('drops every attribute except the allowed ones, even in case of class names
   t.end();
 });
 
+test('succeeds because of catch-all allowedAttributes rules', function (t) {
+  t.equal(insane('<div a="nope" id="foo" class="bar baz" style="position:absolute">foo</div>', {
+    allowedTags: ['div'],
+    allowedAttributes: { '*': ['class', 'id', 'style'] } },
+    true
+  ), '<div id="foo" class="bar baz" style="position:absolute">foo</div>');
+  t.end();
+});
+
 test('drops every class name if not whitelisted', function (t) {
   t.equal(insane('<div a="a" b="b" class="foo bar">foo</div>', {
     allowedTags: ['div'],

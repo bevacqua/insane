@@ -44,6 +44,7 @@ function sanitizer (buffer, options) {
       var value = attrs[key];
       var classesOk = (o.allowedClasses || {})[low] || [];
       var attrsOk = (o.allowedAttributes || {})[low] || [];
+      attrsOk = attrsOk.concat((o.allowedAttributes || {})['*'] || []);
       var valid;
       var lkey = lowercase(key);
       if (lkey === 'class' && attrsOk.indexOf(lkey) === -1) {
