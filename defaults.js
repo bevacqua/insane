@@ -2,7 +2,8 @@
 
 var defaults = {
   allowedAttributes: {
-    a: ['href', 'name', 'target', 'title', 'aria-label'],
+    '*': ['title', 'accesskey'],
+    a: ['href', 'name', 'target', 'aria-label'],
     iframe: ['allowfullscreen', 'frameborder', 'src'],
     img: ['src', 'alt', 'title', 'aria-label']
   },
