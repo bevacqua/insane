@@ -8,7 +8,7 @@ var defaults = {
     img: ['src', 'alt', 'title', 'aria-label']
   },
   allowedClasses: {},
-  allowedSchemes: ['http', 'https', 'mailto'],
+  allowedSchemes: ['http', 'https', 'mailto','tel'],
   allowedTags: [
     'a', 'abbr', 'article', 'b', 'blockquote', 'br', 'caption', 'code', 'del', 'details', 'div', 'em',
     'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'ins', 'kbd', 'li', 'main', 'mark',
