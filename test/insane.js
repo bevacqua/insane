@@ -180,3 +180,8 @@ test('doesn\'t care about quotes', function (t) {
   t.equal(insane('"bar?"'), '"bar?"');
   t.end();
 });
+
+test('encodes hrefs', function (t) {
+  t.equal(insane('<a href="&#106;">test</a>'), '<a href="&amp;#106;">test</a>');
+  t.end();
+});

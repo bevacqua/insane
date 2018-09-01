@@ -1,6 +1,6 @@
 'use strict';
 
-var he = require('he');
+var he = require('./she');
 var lowercase = require('./lowercase');
 var attributes = require('./attributes');
 var elements = require('./elements');
