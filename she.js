@@ -36,8 +36,6 @@ escapeHtml.options = unescapeHtml.options = {};
 
 module.exports = {
   encode: escapeHtml,
-  escape: escapeHtml,
   decode: unescapeHtml,
-  unescape: unescapeHtml,
   version: '1.0.0-browser'
 };
