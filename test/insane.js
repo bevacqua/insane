@@ -180,3 +180,13 @@ test('doesn\'t care about quotes', function (t) {
   t.equal(insane('"bar?"'), '"bar?"');
   t.end();
 });
+
+test('doesn\'t care about malformed html', function (t) {
+  t.equal(insane('<'), '&lt;');
+  t.equal(insane('</'), '&lt;/');
+  t.equal(insane('</>'), '&lt;/>');
+  t.equal(insane('<a'), '&lt;a');
+  t.equal(insane('a<'), 'a&lt;');
+  t.equal(insane('a<c'), 'a&lt;c');
+  t.end();
+});
