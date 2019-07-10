@@ -41,14 +41,14 @@ Defaults to `['http', 'https', 'mailto']`.
 
 #### `allowedTags`
 
-An array of tags that you'll allow in the resulting HTML.
+An array of tags that you'll allow in the resulting HTML. To allow attributes for the tags, you still need to explicitly allow them using `allowedAttributes`.
 
 ###### Example
 
-> Only allow spans, discarding the rest of elements.
+> Only allow spans, discarding the rest of elements as well any attributes of the `span` tag.
 
 ```js
-insane('<div>foo</div><span>bar</span>', {
+insane('<div>foo</div><span id="3631">bar</span>', {
   allowedTags: ['span']
 });
 // <- '<span>bar</span>'
