@@ -1,3 +1,8 @@
+# 2.7.0
+
+- Add support for a wildcard `*` tag in `allowedAttributes`.
+
+# 2.6.2 Self-Filter
 
 - Add 'u' tag to accepted whitelist.
 

@@ -1,7 +1,10 @@
 {
-  "name": "insane",
+  "name": "@vtex/insane",
   "version": "2.6.2",
   "description": "Lean and configurable whitelist-oriented HTML sanitizer",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bevacqua/insane.git"
