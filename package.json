@@ -1,6 +1,6 @@
 {
   "name": "@vtex/insane",
-  "version": "2.6.2",
+  "version": "2.7.0",
   "description": "Lean and configurable whitelist-oriented HTML sanitizer",
   "publishConfig": {
     "access": "public"
