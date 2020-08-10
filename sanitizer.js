@@ -1,141 +1,146 @@
-'use strict';
+'use strict'
 
-var he = require('he');
-var lowercase = require('./lowercase');
-var attributes = require('./attributes');
-var elements = require('./elements');
+var he = require('he')
+var lowercase = require('./lowercase')
+var attributes = require('./attributes')
+var elements = require('./elements')
 
-function sanitizer (buffer, options) {
-  var last;
-  var context;
-  var o = options || {};
+function sanitizer(buffer, options) {
+  var last
+  var context
+  var o = options || {}
 
-  reset();
+  reset()
 
   return {
     start: start,
     end: end,
-    chars: chars
-  };
-
-  function out (value) {
-    buffer.push(value);
+    chars: chars,
   }
 
-  function start (tag, attrs, unary) {
-    var low = lowercase(tag);
+  function out(value) {
+    buffer.push(value)
+  }
+
+  function start(tag, attrs, unary) {
+    var low = lowercase(tag)
 
     if (context.ignoring) {
-      ignore(low); return;
+      ignore(low)
+      return
     }
     if ((o.allowedTags || []).indexOf(low) === -1) {
-      ignore(low); return;
+      ignore(low)
+      return
     }
     if (o.filter && !o.filter({ tag: low, attrs: attrs })) {
-      ignore(low); return;
+      ignore(low)
+      return
     }
 
-    out('<');
-    out(low);
-    Object.keys(attrs).forEach(parse);
-    out(unary ? '/>' : '>');
+    out('<')
+    out(low)
+    Object.keys(attrs).forEach(parse)
+    out(unary ? '/>' : '>')
 
-    function parse (key) {
-      var value = attrs[key];
-      var classesOk = (o.allowedClasses || {})[low] || [];
-      var attrsOk = (o.allowedAttributes || {})[low] || [];
-      attrsOk = attrsOk.concat((o.allowedAttributes || {})['*'] || []);
-      var valid;
-      var lkey = lowercase(key);
+    function parse(key) {
+      var value = attrs[key]
+      var classesOk = (o.allowedClasses || {})[low] || []
+      var attrsOk = (o.allowedAttributes || {})[low] || []
+      attrsOk = attrsOk.concat((o.allowedAttributes || {})['*'] || [])
+      var valid
+      var lkey = lowercase(key)
       if (lkey === 'class' && attrsOk.indexOf(lkey) === -1) {
-        value = value.split(' ').filter(isValidClass).join(' ').trim();
-        valid = value.length;
+        value = value.split(' ').filter(isValidClass).join(' ').trim()
+        valid = value.length
       } else {
-        valid = attrsOk.indexOf(lkey) !== -1 && (attributes.uris[lkey] !== true || testUrl(value));
+        valid =
+          attrsOk.indexOf(lkey) !== -1 &&
+          (attributes.uris[lkey] !== true || testUrl(value))
       }
       if (valid) {
-        out(' ');
-        out(key);
+        out(' ')
+        out(key)
         if (typeof value === 'string') {
-          out('="');
-          out(he.encode(value));
-          out('"');
+          out('="')
+          out(he.encode(value))
+          out('"')
         }
       }
-      function isValidClass (className) {
-        return classesOk && classesOk.indexOf(className) !== -1;
+      function isValidClass(className) {
+        return classesOk && classesOk.indexOf(className) !== -1
       }
     }
   }
 
-  function end (tag) {
-    var low = lowercase(tag);
-    var allowed = (o.allowedTags || []).indexOf(low) !== -1;
+  function end(tag) {
+    var low = lowercase(tag)
+    var allowed = (o.allowedTags || []).indexOf(low) !== -1
     if (allowed) {
       if (context.ignoring === false) {
-        out('</');
-        out(low);
-        out('>');
+        out('</')
+        out(low)
+        out('>')
       } else {
-        unignore(low);
+        unignore(low)
       }
     } else {
-      unignore(low);
+      unignore(low)
     }
   }
 
-  function testUrl (text) {
-    var start = text[0];
+  function testUrl(text) {
+    var start = text[0]
     if (start === '#' || start === '/') {
-      return true;
+      return true
     }
-    var colon = text.indexOf(':');
+    var colon = text.indexOf(':')
     if (colon === -1) {
-      return true;
+      return true
     }
-    var questionmark = text.indexOf('?');
+    var questionmark = text.indexOf('?')
     if (questionmark !== -1 && colon > questionmark) {
-      return true;
+      return true
     }
-    var hash = text.indexOf('#');
+    var hash = text.indexOf('#')
     if (hash !== -1 && colon > hash) {
-      return true;
+      return true
     }
-    return o.allowedSchemes.some(matches);
+    return o.allowedSchemes.some(matches)
 
-    function matches (scheme) {
-      return text.indexOf(scheme + ':') === 0;
+    function matches(scheme) {
+      return text.indexOf(scheme + ':') === 0
     }
   }
 
-  function chars (text) {
+  function chars(text) {
     if (context.ignoring === false) {
-      out(o.transformText ? o.transformText(text) : text);
+      out(o.transformText ? o.transformText(text) : text)
     }
   }
 
-  function ignore (tag) {
+  function ignore(tag) {
     if (elements.voids[tag]) {
-      return;
+      return
     }
     if (context.ignoring === false) {
-      context = { ignoring: tag, depth: 1 };
+      context = { ignoring: tag, depth: 1 }
     } else if (context.ignoring === tag) {
-      context.depth++;
+      context.depth++
     }
   }
 
-  function unignore (tag) {
+  function unignore(tag) {
     if (context.ignoring === tag) {
       if (--context.depth <= 0) {
-        reset();
+        reset()
       }
     }
   }
 
-  function reset () {
-    context = { ignoring: false, depth: 0 };
+  function reset() {
+    context = { ignoring: false, depth: 0 }
   }
 }
 
-module.exports = sanitizer;
+module.exports = sanitizer

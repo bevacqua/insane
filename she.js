@@ -1,43 +1,43 @@
-'use strict';
+'use strict'
 
 var escapes = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
   '"': '&quot;',
-  "'": '&#39;'
-};
+  "'": '&#39;',
+}
 var unescapes = {
   '&amp;': '&',
   '&lt;': '<',
   '&gt;': '>',
   '&quot;': '"',
-  '&#39;': "'"
-};
-var rescaped = /(&amp;|&lt;|&gt;|&quot;|&#39;)/g;
-var runescaped = /[&<>"']/g;
-
-function escapeHtmlChar (match) {
-  return escapes[match];
+  '&#39;': "'",
 }
-function unescapeHtmlChar (match) {
-  return unescapes[match];
-}
+var rescaped = /(&amp;|&lt;|&gt;|&quot;|&#39;)/g
+var runescaped = /[&<>"']/g
 
-function escapeHtml (text) {
-  return text == null ? '' : String(text).replace(runescaped, escapeHtmlChar);
+function escapeHtmlChar(match) {
+  return escapes[match]
+}
+function unescapeHtmlChar(match) {
+  return unescapes[match]
 }
 
-function unescapeHtml (html) {
-  return html == null ? '' : String(html).replace(rescaped, unescapeHtmlChar);
+function escapeHtml(text) {
+  return text == null ? '' : String(text).replace(runescaped, escapeHtmlChar)
 }
 
-escapeHtml.options = unescapeHtml.options = {};
+function unescapeHtml(html) {
+  return html == null ? '' : String(html).replace(rescaped, unescapeHtmlChar)
+}
+
+escapeHtml.options = unescapeHtml.options = {}
 
 module.exports = {
   encode: escapeHtml,
   escape: escapeHtml,
   decode: unescapeHtml,
   unescape: unescapeHtml,
-  version: '1.0.0-browser'
-};
+  version: '1.0.0-browser',
+}

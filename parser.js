@@ -1,137 +1,161 @@
-'use strict';
+'use strict'
 
-var he = require('he');
-var lowercase = require('./lowercase');
-var attributes = require('./attributes');
-var elements = require('./elements');
-var rstart = /^<\s*([\w:-]+)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/;
-var rend = /^<\s*\/\s*([\w:-]+)[^>]*>/;
-var rattrs = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g;
-var rtag = /^</;
-var rtagend = /^<\s*\//;
+var he = require('he')
+var lowercase = require('./lowercase')
+var attributes = require('./attributes')
+var elements = require('./elements')
+var rstart = /^<\s*([\w:-]+)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/
+var rend = /^<\s*\/\s*([\w:-]+)[^>]*>/
+var rattrs = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g
+var rtag = /^</
+var doctypePattern = /^<!doctype.*?>/i
+var rtagend = /^<\s*\//
 
-function createStack () {
-  var stack = [];
-  stack.lastItem = function lastItem () {
-    return stack[stack.length - 1];
-  };
-  return stack;
+function createStack() {
+  var stack = []
+  stack.lastItem = function lastItem() {
+    return stack[stack.length - 1]
+  }
+  return stack
 }
 
-function parser (html, handler) {
-  var stack = createStack();
-  var last = html;
-  var chars;
+function parser(html, handler) {
+  var stack = createStack()
+  var last = html
+  var chars
 
   while (html) {
-    parsePart();
+    parsePart()
   }
-  parseEndTag(); // clean up any remaining tags
+  parseEndTag() // clean up any remaining tags
 
-  function parsePart () {
-    chars = true;
-    parseTag();
+  function parsePart() {
+    chars = true
+    parseTag()
 
-    var same = html === last;
-    last = html;
+    var same = html === last
+    last = html
 
-    if (same) { // discard, because it's invalid
-      html = '';
+    if (same) {
+      // discard, because it's invalid
+      html = ''
     }
   }
 
-  function parseTag () {
-    if (html.substr(0, 4) === '<!--') { // comments
-      parseComment();
+  function parseTag() {
+    if (html.substr(0, 4) === '<!--') {
+      // comments
+      parseComment()
+    } else if (doctypePattern.test(html)) {
+      parseDoctype()
     } else if (rtagend.test(html)) {
-      parseEdge(rend, parseEndTag);
+      parseEdge(rend, parseEndTag)
     } else if (rtag.test(html)) {
-      parseEdge(rstart, parseStartTag);
+      parseEdge(rstart, parseStartTag)
     }
-    parseTagDecode();
+    parseTagDecode()
   }
 
-  function parseEdge (regex, parser) {
-    var match = html.match(regex);
+  function parseDoctype() {
+    var match = html.match(doctypePattern)
+    chars = false
+    html = html.substring(match[0].length)
+  }
+
+  function parseEdge(regex, parser) {
+    var match = html.match(regex)
     if (match) {
-      html = html.substring(match[0].length);
-      match[0].replace(regex, parser);
-      chars = false;
+      html = html.substring(match[0].length)
+      match[0].replace(regex, parser)
+      chars = false
     }
   }
 
-  function parseComment () {
-    var index = html.indexOf('-->');
+  function parseComment() {
+    var index = html.indexOf('-->')
     if (index >= 0) {
       if (handler.comment) {
-        handler.comment(html.substring(4, index));
+        handler.comment(html.substring(4, index))
       }
-      html = html.substring(index + 3);
-      chars = false;
+      html = html.substring(index + 3)
+      chars = false
     }
   }
 
-  function parseTagDecode () {
+  function parseTagDecode() {
     if (!chars) {
-      return;
+      return
     }
-    var text;
-    var index = html.indexOf('<');
+    var text
+    var index = html.indexOf('<')
     if (index >= 0) {
-      text = html.substring(0, index);
-      html = html.substring(index);
+      text = html.substring(0, index)
+      html = html.substring(index)
     } else {
-      text = html;
-      html = '';
+      text = html
+      html = ''
     }
     if (handler.chars) {
-      handler.chars(text);
+      handler.chars(text)
     }
   }
 
-  function parseStartTag (tag, tagName, rest, unary) {
-    var attrs = {};
-    var low = lowercase(tagName);
-    var u = elements.voids[low] || !!unary;
+  function parseStartTag(tag, tagName, rest, unary) {
+    var attrs = {}
+    var low = lowercase(tagName)
+    var u = elements.voids[low] || !!unary
 
-    rest.replace(rattrs, attrReplacer);
+    rest.replace(rattrs, attrReplacer)
 
     if (!u) {
-      stack.push(low);
+      stack.push(low)
     }
     if (handler.start) {
-      handler.start(low, attrs, u);
+      handler.start(low, attrs, u)
     }
 
-    function attrReplacer (match, name, doubleQuotedValue, singleQuotedValue, unquotedValue) {
-      if (doubleQuotedValue === void 0 && singleQuotedValue === void 0 && unquotedValue === void 0) {
-        attrs[name] = void 0; // attribute is like <button disabled></button>
+    function attrReplacer(
+      match,
+      name,
+      doubleQuotedValue,
+      singleQuotedValue,
+      unquotedValue
+    ) {
+      if (
+        doubleQuotedValue === void 0 &&
+        singleQuotedValue === void 0 &&
+        unquotedValue === void 0
+      ) {
+        attrs[name] = void 0 // attribute is like <button disabled></button>
       } else {
-        attrs[name] = he.decode(doubleQuotedValue || singleQuotedValue || unquotedValue || '');
+        attrs[name] = he.decode(
+          doubleQuotedValue || singleQuotedValue || unquotedValue || ''
+        )
       }
     }
   }
 
-  function parseEndTag (tag, tagName) {
-    var i;
-    var pos = 0;
-    var low = lowercase(tagName);
+  function parseEndTag(tag, tagName) {
+    var i
+    var pos = 0
+    var low = lowercase(tagName)
     if (low) {
       for (pos = stack.length - 1; pos >= 0; pos--) {
         if (stack[pos] === low) {
-          break; // find the closest opened tag of the same type
+          break // find the closest opened tag of the same type
         }
       }
     }
     if (pos >= 0) {
       for (i = stack.length - 1; i >= pos; i--) {
-        if (handler.end) { // close all the open elements, up the stack
-          handler.end(stack[i]);
+        if (handler.end) {
+          // close all the open elements, up the stack
+          handler.end(stack[i])
         }
       }
-      stack.length = pos;
+      stack.length = pos
     }
   }
 }
 
-module.exports = parser;
+module.exports = parser

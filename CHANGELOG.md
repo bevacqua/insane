@@ -1,3 +1,6 @@
+# 2.7.1
+- Support content beginning with `<!doctype>`.
+
 # 2.7.0
 
 - Add support for a wildcard `*` tag in `allowedAttributes`.
