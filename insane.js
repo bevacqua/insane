@@ -18,3 +18,4 @@ function insane (html, options, strict) {
 
 insane.defaults = defaults;
 module.exports = insane;
+if (window) window.insane = insane;
