@@ -61,7 +61,7 @@ test('only returns tags in the whitelist even if disallowed tag is nested', func
   t.end();
 });
 
-test('allows blank attribute', function (t) {
+test('ignores blank attribute', function (t) {
   t.equal(insane('<div class>foo</div>', { allowedTags: ['div'] }, true), '<div>foo</div>');
   t.end();
 });
