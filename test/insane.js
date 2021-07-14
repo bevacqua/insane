@@ -61,6 +61,26 @@ test('only returns tags in the whitelist even if disallowed tag is nested', func
   t.end();
 });
 
+test('ignores blank not allowed class attribute', function (t) {
+  t.equal(insane('<div class>foo</div>', { allowedTags: ['div'] }, true), '<div>foo</div>');
+  t.end();
+});
+
+test('allows blank allowed class attribute', function (t) {
+  t.equal(insane('<div class>foo</div>', { allowedAttributes: { div: ['class'], }, allowedTags: ['div'] }, true), '<div class>foo</div>');
+  t.end();
+});
+
+test('allows other blank attribute when containing children', function (t) {
+  t.equal(insane('<div disabled>foo</div>', { allowedAttributes: { div: ['disabled'], }, allowedTags: ['div'] }, true), '<div disabled>foo</div>');
+  t.end();
+});
+
+test('allows other blank attribute when self closing', function (t) {
+  t.equal(insane('<input disabled />', { allowedAttributes: { input: ['disabled'], }, allowedTags: ['input'] }, true), '<input disabled/>');
+  t.end();
+});
+
 test('drops every attribute', function (t) {
   t.equal(insane('<div a="a" b="b" class="foo">foo</div>', { allowedTags: ['div'] }, true), '<div>foo</div>');
   t.end();
